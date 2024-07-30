@@ -35,8 +35,13 @@ function moduleProject2() {
       let square = document.createElement('div')
       square.classList.add('square')
       row.appendChild(square)
-      square.addEventListener('click', () => {
+      square.addEventListener('click', (event) => {
         // 👉 TASK 2 - Use a click handler to target a square 👈
+        if (!square.classList.contains('targeted')) {
+          const CurrentTarget = document.querySelector(".targeted");
+          CurrentTarget.classList.remove("targeted");
+          event.target.classList.add("targeted");
+        }
       })
     }
   }
@@ -65,7 +70,36 @@ function moduleProject2() {
 
   document.addEventListener('keydown', evt => {
     // 👉 TASK 3 - Use the arrow keys to highlight a new square 👈
+      let isUp = evt.key === keys.up
+      let isDown = evt.key === keys.down
+      let isLeft = evt.key === keys.left
+      let isRight = evt.key === keys.right
 
+      let targeted = document.querySelector('.targeted');
+
+      if (isUp) {
+        if (targeted.parentElement.previousElementSibling) {
+          let idx = Array.from(targeted.parentElement.children).indexOf(targeted);
+          targeted.classList.remove('targeted');
+          targeted.parentElement.previousElementSibling.children[idx].classList.add("targeted");
+        }
+      }else if (isDown) {
+        if (targeted.parentElement.nextElementSibling) {
+          let idx = Array.from(targeted.parentElement.children).indexOf(targeted);
+          targeted.classList.remove('targeted');
+          targeted.parentElement.nextElementSibling.children[idx].classList.add("targeted");
+        }
+      }else if (isLeft) {
+        if (targeted.previousElementSibling) {
+          targeted.classList.remove('targeted');
+          targeted.previousElementSibling.classList.add('targeted');
+        }
+      }else if(isRight) {
+        if (targeted.nextElementSibling) {
+          targeted.classList.remove('targeted');
+          targeted.nextElementSibling.classList.add('targeted');
+        }
+      }
     // 👉 TASK 4 - Use the space bar to exterminate a mosquito 👈
 
     // 👉 TASK 5 - End the game 👈
